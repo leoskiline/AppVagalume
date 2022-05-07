@@ -1,11 +1,15 @@
 package com.example.apprestful;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -47,6 +51,31 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.optionsmenu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Intent intent;
+
+        switch(item.getItemId())
+        {
+            case R.id.miCadastrar:
+                intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                break;
+
+            case R.id.miMusicas:
+                intent = new Intent(this, ListagemActivity.class);
+                startActivity(intent);
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     private void CarregarVagalume() {
         try {
             RetrofitConfig rc = new RetrofitConfig();
@@ -84,6 +113,14 @@ public class MainActivity extends AppCompatActivity {
                                                 if(mdal.salvar(mst))
                                                 {
                                                     Toast.makeText(MainActivity.this,"Musica salva com sucesso!",Toast.LENGTH_LONG).show();
+                                                    new android.os.Handler().postDelayed(
+                                                            new Runnable() {
+                                                                public void run() {
+                                                                    Intent intent = new Intent(MainActivity.this, ListagemActivity.class);
+                                                                    startActivity(intent);
+                                                                }
+                                                            }, 3000);
+
                                                 }else{
                                                     Toast.makeText(MainActivity.this,"Não foi possivel salvar musica!",Toast.LENGTH_LONG).show();
                                                 }
