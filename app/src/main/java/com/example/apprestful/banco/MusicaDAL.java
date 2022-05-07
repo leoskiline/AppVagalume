@@ -57,7 +57,7 @@ public class MusicaDAL
     public MusicaComTraducao get(String id)
     {   MusicaDAL mdal=new MusicaDAL(context);
         MusicaComTraducao o = null;
-        Cursor cursor=con.consultar("select * from "+TABLE+" where mus_id="+id);
+        Cursor cursor=con.consultar("select * from "+TABLE+" where mus_id='"+id+"'");
         if(cursor.moveToFirst())
             o=new MusicaComTraducao(cursor.getString(0),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4));
         cursor.close();;

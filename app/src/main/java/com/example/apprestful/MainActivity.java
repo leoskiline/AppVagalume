@@ -78,11 +78,17 @@ public class MainActivity extends AppCompatActivity {
                                             }
                                             MusicaComTraducao mst = new MusicaComTraducao(musica.mus.get(0).id,musica.mus.get(0).name,musica.art.name,musica.mus.get(0).text,traducao);
                                             MusicaDAL mdal = new MusicaDAL(MainActivity.this);
-                                            if(mdal.salvar(mst))
+                                            MusicaComTraducao musicaExiste = mdal.get(mst.mus_id);
+                                            if(musicaExiste == null)
                                             {
-                                                Toast.makeText(MainActivity.this,"Musica salva com sucesso!",Toast.LENGTH_LONG).show();
+                                                if(mdal.salvar(mst))
+                                                {
+                                                    Toast.makeText(MainActivity.this,"Musica salva com sucesso!",Toast.LENGTH_LONG).show();
+                                                }else{
+                                                    Toast.makeText(MainActivity.this,"Não foi possivel salvar musica!",Toast.LENGTH_LONG).show();
+                                                }
                                             }else{
-                                                Toast.makeText(MainActivity.this,"Não foi possivel salvar musica!!",Toast.LENGTH_LONG).show();
+                                                Toast.makeText(MainActivity.this,"Musica já consta na lista, escolha outra!",Toast.LENGTH_LONG).show();
                                             }
                                         }
                                     }
